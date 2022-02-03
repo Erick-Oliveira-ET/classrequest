@@ -7,3 +7,5 @@ export interface ClassItem {
   labHrs: number;
   totalHrs: number;
 }
+
+export type TakenMapType = Record<string, ClassItem>;

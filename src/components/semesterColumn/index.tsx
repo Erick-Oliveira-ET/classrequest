@@ -1,31 +1,29 @@
 import { ClassItem } from "@/interfaces/classes";
+import { useProfile } from "context/Profile";
 import { useState } from "react";
 import styles from "./style.module.css";
 
 interface SemesterColumnInterface {
   semesterClasses: ClassItem[];
   seen: Record<string, ClassItem>;
-  onClassBoxClick: (arg0: ClassItem) => void;
 }
 
-const SemesterColumn = ({
-  semesterClasses,
-  seen,
-  onClassBoxClick,
-}: SemesterColumnInterface) => {
+const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
+  const { updateClassesTaken } = useProfile();
   return (
     <div>
       {semesterClasses.map((classItem: ClassItem, id) => {
-        const style = seen[classItem.code]
-          ? {
-              background: "green",
-              color: "white",
-            }
-          : {};
+        const style =
+          seen && seen[classItem.code]
+            ? {
+                background: "green",
+                color: "white",
+              }
+            : {};
 
         return (
           <div
-            onClick={() => onClassBoxClick(classItem)}
+            onClick={() => updateClassesTaken(classItem)}
             key={id}
             className={styles.classBox}
             style={style}
