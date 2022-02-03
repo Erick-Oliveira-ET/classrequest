@@ -13,20 +13,14 @@ const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
   return (
     <div>
       {semesterClasses.map((classItem: ClassItem, id) => {
-        const style =
-          seen && seen[classItem.code]
-            ? {
-                background: "green",
-                color: "white",
-              }
-            : {};
+        const conditionalStyling =
+          seen && seen[classItem.code] ? styles.taken : styles.classBox;
 
         return (
           <div
             onClick={() => updateClassesTaken(classItem)}
             key={id}
-            className={styles.classBox}
-            style={style}
+            className={conditionalStyling}
           >
             <div className={styles.classNameTitle}>
               <strong>{classItem.name} </strong>
