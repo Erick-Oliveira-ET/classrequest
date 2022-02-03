@@ -1,0 +1,46 @@
+.classBox {
+  margin: 5px;
+  height: 90px;
+  width: 140px;
+  max-width: 140px;
+
+  background: rgb(227, 227, 241);
+  box-shadow: 3px 5px 15px -4px #6b6b6b;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.classBox:hover {
+  cursor: pointer;
+}
+
+div.classNameTitle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.classNameTitle strong {
+  text-align: center;
+  color: rgb(53, 53, 53);
+}
+
+.hoursBoxes {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  color: rgb(53, 53, 53);
+  border-top: 1px solid rgb(46, 68, 105);
+  border-radius: 0 0 10px 10px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
