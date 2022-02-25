@@ -459,7 +459,7 @@ const classes = {
       totalHrs: 4,
     },
     {
-      name: "Fabricação Assistida por Computadores",
+      name: "Fabricação Assistida por Computador",
       code: "FEMEC41094",
       requirementCode: "FEMEC42073",
       classHrs: 2,
