@@ -1,5 +1,6 @@
 .classBox,
-.taken {
+.taken,
+.blocked {
   margin: 5px;
   height: 90px;
   width: 140px;
@@ -55,4 +56,8 @@ div.classNameTitle {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+}
+
+.blocked {
+  background: yellow;
 }

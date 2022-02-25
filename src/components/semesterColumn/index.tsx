@@ -10,15 +10,30 @@ interface SemesterColumnInterface {
 
 const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
   const { updateClassesTaken } = useProfile();
+
+  const handleSelectClass = (
+    classItem: ClassItem,
+    hasTakenPrerequisite?: boolean
+  ) => {
+    if (hasTakenPrerequisite) updateClassesTaken(classItem);
+  };
+
   return (
     <div>
       {semesterClasses.map((classItem: ClassItem, id) => {
-        const conditionalStyling =
-          seen && seen[classItem.code] ? styles.taken : styles.classBox;
+        const hasTakenPrerequisite =
+          classItem.requirementCode === undefined ||
+          !!seen[classItem.requirementCode];
+
+        const conditionalStyling = !hasTakenPrerequisite
+          ? styles.blocked
+          : seen && seen[classItem.code]
+          ? styles.taken
+          : styles.classBox;
 
         return (
           <div
-            onClick={() => updateClassesTaken(classItem)}
+            onClick={() => handleSelectClass(classItem, hasTakenPrerequisite)}
             key={id}
             className={conditionalStyling}
           >
