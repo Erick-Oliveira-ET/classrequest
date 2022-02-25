@@ -29,8 +29,11 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
     if (!temp) return;
     let localStorageClassTaken: TakenMapType = JSON.parse(temp);
     setClassTaken(localStorageClassTaken);
-    countHoursCompleted();
   }, []);
+
+  useEffect(() => {
+    countHoursCompleted();
+  }, [classTaken]);
 
   const updateClassesTaken = (classItem: ClassItem) => {
     const temp = cloneDeep(classTaken);
@@ -39,15 +42,17 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
 
     localStorage.setItem("@classRequest-ClassesTaken", JSON.stringify(temp));
     setClassTaken(temp);
-    countHoursCompleted();
   };
 
   const countHoursCompleted = () => {
     let temp = 0;
+    const deepClassTaken = cloneDeep(classTaken);
 
-    Object.entries(classTaken).map(([_, classItem]: [string, ClassItem]) => {
-      temp += classItem.totalHrs * 15;
-    });
+    Object.entries(deepClassTaken).map(
+      ([_, classItem]: [string, ClassItem]) => {
+        temp += classItem.totalHrs * 15;
+      }
+    );
 
     setHoursCompleted(temp);
   };
