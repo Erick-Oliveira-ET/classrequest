@@ -467,14 +467,6 @@ const classes = {
       totalHrs: 2,
     },
     {
-      name: "Fabricação Assistida por Computador",
-      code: "FEMEC41094",
-      requirementCode: "FEMEC42073",
-      classHrs: 2,
-      labHrs: 0,
-      totalHrs: 2,
-    },
-    {
       name: "Instalações Elétricas Industriais",
       code: "FEMEC42092",
       requirementCode: "FEELT49070",
