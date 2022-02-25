@@ -234,7 +234,7 @@ const classes = {
     },
     {
       name: "Circuitos Elétricos p/ Mecatrônica",
-      code: "FEMEC49050",
+      code: "FEELT49050",
       requirementCode: "INFIS49030",
       classHrs: 4,
       labHrs: 1,
