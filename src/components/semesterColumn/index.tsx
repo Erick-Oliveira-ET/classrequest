@@ -23,7 +23,7 @@ const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
       {semesterClasses.map((classItem: ClassItem, id) => {
         const hasTakenPrerequisite =
           classItem.requirementCode === undefined ||
-          !!seen[classItem.requirementCode];
+          !!classItem.requirementCode.split("/").every((item) => seen[item]);
 
         const conditionalStyling = !hasTakenPrerequisite
           ? styles.blocked
