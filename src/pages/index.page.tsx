@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import classesJson from "../../classes.js";
 import SemesterColumn from "@/components/semesterColumn";
 import { useProfile } from "context/Profile";
+import NavBar from "@/components/Nav";
 
 const Home: NextPage = () => {
   const { classTaken } = useProfile();
@@ -18,6 +19,8 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <NavBar />
 
       <main className={styles.main}>
         <SemesterColumn seen={classTaken} semesterClasses={classesJson[1]} />

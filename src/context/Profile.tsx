@@ -11,6 +11,7 @@ import {
 interface ProfileData {
   updateClassesTaken: (classItem: ClassItem) => void;
   classTaken: TakenMapType;
+  hoursCompleted: number;
 }
 
 interface ProfileProviderProps {
@@ -21,12 +22,14 @@ export const Profile = createContext({} as ProfileData);
 
 export function ProfileProvider({ children }: ProfileProviderProps) {
   const [classTaken, setClassTaken] = useState<TakenMapType>({});
+  const [hoursCompleted, setHoursCompleted] = useState<number>(0);
 
   useEffect(() => {
     let temp = localStorage.getItem("@classRequest-ClassesTaken");
     if (!temp) return;
     let localStorageClassTaken: TakenMapType = JSON.parse(temp);
     setClassTaken(localStorageClassTaken);
+    countHoursCompleted();
   }, []);
 
   const updateClassesTaken = (classItem: ClassItem) => {
@@ -36,10 +39,23 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
 
     localStorage.setItem("@classRequest-ClassesTaken", JSON.stringify(temp));
     setClassTaken(temp);
+    countHoursCompleted();
+  };
+
+  const countHoursCompleted = () => {
+    let temp = 0;
+
+    Object.entries(classTaken).map(([_, classItem]: [string, ClassItem]) => {
+      temp += classItem.totalHrs * 15;
+    });
+
+    setHoursCompleted(temp);
   };
 
   return (
-    <Profile.Provider value={{ updateClassesTaken, classTaken }}>
+    <Profile.Provider
+      value={{ updateClassesTaken, classTaken, hoursCompleted }}
+    >
       {children}
     </Profile.Provider>
   );
