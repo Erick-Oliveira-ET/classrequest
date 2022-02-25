@@ -2,8 +2,9 @@
 .taken,
 .blocked {
   margin: 5px;
-  height: 90px;
-  width: 140px;
+  height: 100%;
+  min-height: 90px;
+  width: 100%;
   max-width: 140px;
 
   background: rgb(227, 227, 241);

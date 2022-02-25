@@ -19,7 +19,7 @@ const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
   };
 
   return (
-    <div>
+    <div style={{ width: "fit-content" }}>
       {semesterClasses.map((classItem: ClassItem, id) => {
         const hasTakenPrerequisite =
           classItem.requirementCode === undefined ||
