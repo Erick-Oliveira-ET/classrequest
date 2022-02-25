@@ -477,7 +477,7 @@ const classes = {
     {
       name: "Instalações Elétricas Industriais",
       code: "FEMEC42092",
-      requirementCode: "FEMET49070",
+      requirementCode: "FEELT49070",
       classHrs: 4,
       labHrs: 0,
       totalHrs: 4,
