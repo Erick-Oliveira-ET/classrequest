@@ -1,5 +1,8 @@
-const classes = {
-  1: [
+import { ClassItem } from "@/interfaces/classes";
+import { cloneDeep, union } from "lodash";
+
+const classes = [
+  [
     {
       name: "Algoritmo e Programação de Computadores",
       code: "FACOM49010",
@@ -50,7 +53,7 @@ const classes = {
       totalHrs: 4,
     },
   ],
-  2: [
+  [
     {
       name: "Algebra Linear",
       code: "FAMAT49022",
@@ -103,7 +106,7 @@ const classes = {
       totalHrs: 2,
     },
   ],
-  3: [
+  [
     {
       name: "Cálculo Diferencial e Integral III",
       code: "FAMAT49030",
@@ -160,7 +163,7 @@ const classes = {
       totalHrs: 3,
     },
   ],
-  4: [
+  [
     {
       name: "Dinâmica",
       code: "FEMEC41040",
@@ -216,7 +219,7 @@ const classes = {
       totalHrs: 1,
     },
   ],
-  5: [
+  [
     {
       name: "Arquitetura e Organização de Computadores I",
       code: "FACOM49050",
@@ -273,7 +276,7 @@ const classes = {
       totalHrs: 5,
     },
   ],
-  6: [
+  [
     {
       name: "Controle de Sistemas Lineares",
       code: "FEMEC42060",
@@ -328,7 +331,7 @@ const classes = {
       totalHrs: 5,
     },
   ],
-  7: [
+  [
     {
       name: "Arquitetura de Redes de Computadores",
       code: "FACOM49070",
@@ -377,7 +380,7 @@ const classes = {
       totalHrs: 5,
     },
   ],
-  8: [
+  [
     {
       name: "Bancos de Dados",
       code: "FACOM49080",
@@ -433,7 +436,7 @@ const classes = {
       totalHrs: 4,
     },
   ],
-  9: [
+  [
     {
       name: "Administração",
       code: "FAGEN49090",
@@ -491,7 +494,7 @@ const classes = {
       totalHrs: 4,
     },
   ],
-  10: [
+  [
     {
       name: "Projeto de Fim de Curso II",
       code: "FEMEC42100",
@@ -501,6 +504,86 @@ const classes = {
       totalHrs: 2,
     },
   ],
-};
+];
 
-module.exports = classes;
+export default classes;
+
+class ClassesMaped {
+  values: Record<string, ClassItem>;
+  requestedClassesMap?: Map<string, Array<string>>;
+
+  constructor() {
+    [this.values, this.requestedClassesMap] = this._init();
+  }
+
+  private _init(): [Record<string, ClassItem>, Map<string, Array<string>>] {
+    let temp: Array<[string, ClassItem]> = [];
+    classes.map((item: ClassItem[]) => {
+      temp = temp.concat(
+        item.map((classItem) => {
+          return [classItem.code, classItem];
+        })
+      );
+    });
+
+    let requestedClassesMap = this._requestedClassesMap(temp);
+
+    return [Object.fromEntries(temp), requestedClassesMap];
+  }
+
+  /**
+   * Create a map of classes that is a required class
+   * for some class in the curricular grade. The key
+   * is the name of the class and the value is an
+   * array of class names that has the respective class
+   * as required or has a class that has a required class
+   * linked to that class.
+   */
+  private _requestedClassesMap(
+    entriesValues: Array<[string, ClassItem]>
+  ): Map<string, Array<string>> {
+    let temp = new Map();
+
+    entriesValues.reverse().map(([key, classItem]: [string, ClassItem]) => {
+      if (
+        classItem.requirementCode === undefined ||
+        classItem.requirementCode === null
+      )
+        return;
+
+      let requirementCode = classItem.requirementCode.split("/");
+
+      requirementCode.map((requiredItem) => {
+        if (temp.get(classItem.code)) {
+          if (temp.get(requiredItem)) {
+            temp.set(
+              requiredItem,
+              temp
+                .get(requiredItem)
+                .concat(classItem.code, temp.get(classItem.code))
+            );
+          } else {
+            temp.set(
+              requiredItem,
+              temp.get(classItem.code).concat(classItem.code)
+            );
+          }
+        } else {
+          if (temp.get(requiredItem)) {
+            temp.set(
+              requiredItem,
+              temp.get(requiredItem).concat(classItem.code)
+            );
+          } else {
+            temp.set(requiredItem, [classItem.code]);
+          }
+        }
+      });
+    });
+    return temp;
+  }
+}
+
+const classesMapped = new ClassesMaped();
+
+export { classesMapped };

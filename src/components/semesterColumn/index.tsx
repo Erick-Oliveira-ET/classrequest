@@ -1,6 +1,5 @@
 import { ClassItem } from "@/interfaces/classes";
 import { useProfile } from "context/Profile";
-import { useState } from "react";
 import styles from "./style.module.css";
 
 interface SemesterColumnInterface {

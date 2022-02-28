@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { classesMapped } from "../../classes";
 
 interface ProfileData {
   updateClassesTaken: (classItem: ClassItem) => void;
@@ -37,8 +38,20 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
 
   const updateClassesTaken = (classItem: ClassItem) => {
     const temp = cloneDeep(classTaken);
-    if (temp[classItem.code]) delete temp[classItem.code];
-    else temp[classItem.code] = classItem;
+    if (temp[classItem.code]) {
+      let dependsOnClasses = classesMapped.requestedClassesMap.get(
+        classItem.code
+      );
+
+      console.log("dependsOnClasses", dependsOnClasses);
+
+      if (dependsOnClasses)
+        dependsOnClasses.map((itemCode) => {
+          if (temp[itemCode]) delete temp[itemCode];
+        });
+
+      delete temp[classItem.code];
+    } else temp[classItem.code] = classItem;
 
     localStorage.setItem("@classRequest-ClassesTaken", JSON.stringify(temp));
     setClassTaken(temp);

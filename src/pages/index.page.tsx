@@ -1,10 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import classesJson from "../../classes.js";
+import classesArray from "../../classes";
 import SemesterColumn from "@/components/semesterColumn";
 import { useProfile } from "context/Profile";
 import NavBar from "@/components/Nav";
+import { ClassItem } from "@/interfaces/classes";
 
 const Home: NextPage = () => {
   const { classTaken } = useProfile();
@@ -23,16 +24,15 @@ const Home: NextPage = () => {
       <NavBar />
 
       <main className={styles.main}>
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[1]} />
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[2]} />
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[3]} />
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[4]} />
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[5]} />
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[6]} />
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[7]} />
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[8]} />
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[9]} />
-        <SemesterColumn seen={classTaken} semesterClasses={classesJson[10]} />
+        {classesArray.map((item: ClassItem[], index) => {
+          return (
+            <SemesterColumn
+              key={index}
+              seen={classTaken}
+              semesterClasses={item}
+            />
+          );
+        })}
       </main>
     </div>
   );
