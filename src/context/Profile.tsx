@@ -30,6 +30,12 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
     if (!temp) return;
     let localStorageClassTaken: TakenMapType = JSON.parse(temp);
     setClassTaken(localStorageClassTaken);
+
+    window.addEventListener("keyup", (event) => {
+      if (event.key === "r") {
+        localStorage.clear();
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -39,11 +45,9 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
   const updateClassesTaken = (classItem: ClassItem) => {
     const temp = cloneDeep(classTaken);
     if (temp[classItem.code]) {
-      let dependsOnClasses = classesMapped.requestedClassesMap.get(
+      let dependsOnClasses = classesMapped.requestedClassesMap?.get(
         classItem.code
       );
-
-      console.log("dependsOnClasses", dependsOnClasses);
 
       if (dependsOnClasses)
         dependsOnClasses.map((itemCode) => {
