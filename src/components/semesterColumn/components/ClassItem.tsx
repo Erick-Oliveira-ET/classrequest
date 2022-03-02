@@ -23,6 +23,9 @@ const ClassItem = ({ classItem, status, ...props }: ClassItemProps) => {
     },
     blocked: {
       bg: "red.600",
+      _hover: {
+        cursor: "default",
+      },
     },
   };
 
