@@ -1,13 +1,18 @@
+import { Box, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { useProfile } from "context/Profile";
-import styles from "./style.module.css";
 
 const NavBar = () => {
   const { hoursCompleted } = useProfile();
 
   return (
-    <nav className={styles.nav}>
-      <h2>Horas Integralizada: {hoursCompleted} / 3.690</h2>
-    </nav>
+    <Flex>
+      <Box p="2px  6px 3px 2px">
+        <Spacer />
+        <Heading size="md">
+          Horas Integralizada: {hoursCompleted} / 3.690
+        </Heading>
+      </Box>
+    </Flex>
   );
 };
 
