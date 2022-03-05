@@ -1,11 +1,21 @@
-import { Box, Center, Divider, Flex, Spacer, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Divider,
+  Flex,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Spacer,
+  Text,
+} from "@chakra-ui/react";
 import { ClassItem as ClassItemInterface } from "@/interfaces/classes";
 import React from "react";
 
 interface ClassItemProps {
   classItem: ClassItemInterface;
   status: "taken" | "free" | "blocked";
-  onClick(): void;
+  onClick?(): void;
 }
 
 const ClassItemComponent = ({
