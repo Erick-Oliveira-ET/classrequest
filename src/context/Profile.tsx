@@ -37,9 +37,22 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
 
   useEffect(() => {
     let temp = localStorage.getItem("@classRequest-ClassesTaken");
-    if (!temp) return;
-    let localStorageClassTaken: TakenMapType = JSON.parse(temp);
-    setClassTaken(localStorageClassTaken);
+    if (temp) {
+      let localStorageClassTaken: TakenMapType = JSON.parse(temp);
+      setClassTaken(localStorageClassTaken);
+    }
+
+    temp = localStorage.getItem("@classRequest-isComplementaryActivitiesTaken");
+    if (temp) {
+      let localStorage: boolean = JSON.parse(temp);
+      setComplementaryActivitiesTaken(localStorage);
+    }
+
+    temp = localStorage.getItem("@classRequest-isRequiredInternshipTaken");
+    if (temp) {
+      let localStorage: boolean = JSON.parse(temp);
+      setIsRequiredInternshipTaken(localStorage);
+    }
 
     window.addEventListener("keyup", (event) => {
       if (event.key === "r") {
@@ -51,6 +64,20 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
   useEffect(() => {
     countHoursCompleted();
   }, [classTaken]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "@classRequest-isComplementaryActivitiesTaken",
+      JSON.stringify(isComplementaryActivitiesTaken)
+    );
+  }, [isComplementaryActivitiesTaken]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "@classRequest-isRequiredInternshipTaken",
+      JSON.stringify(isRequiredInternshipTaken)
+    );
+  }, [isRequiredInternshipTaken]);
 
   const updateClassesTaken = (classItem: ClassItem) => {
     const temp = cloneDeep(classTaken);
