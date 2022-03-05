@@ -1,5 +1,4 @@
 import { ClassItem } from "@/interfaces/classes";
-import { cloneDeep, union } from "lodash";
 
 const classes = [
   [
@@ -505,6 +504,48 @@ const classes = [
     },
   ],
 ];
+
+export const specialRequiredActivities = {
+  requiredInternship: {
+    name: "Estágio Obrigatório",
+    code: "FEMEC42120",
+    requiredHours: 2700,
+    classHrs: 0,
+    labHrs: 12,
+    totalHrs: 12,
+  },
+  complementaryAcademicActivities: {
+    name: "Atividades Acadêmicas Complementares",
+    code: "FEMEC42110",
+    min: 90,
+  },
+  humanityAndSocialScienceClasses: [
+    {
+      name: "Direito e Legislação",
+      code: "FADIR49111",
+      requiredHours: 1500,
+      classHrs: 3,
+      labHrs: 0,
+      totalHrs: 3,
+    },
+    {
+      name: "Ciências Sociais e Jurídicas",
+      code: "FADIR49110",
+      requiredHours: 1500,
+      classHrs: 4,
+      labHrs: 0,
+      totalHrs: 4,
+    },
+    {
+      name: "Direito Empresarial",
+      code: "FADIR49112",
+      requiredHours: 1500,
+      classHrs: 4,
+      labHrs: 0,
+      totalHrs: 4,
+    },
+  ],
+};
 
 export default classes;
 

@@ -11,8 +11,12 @@ import { classesMapped } from "../../classes";
 
 interface ProfileData {
   updateClassesTaken: (classItem: ClassItem) => void;
+  updateComplementaryActivities: () => void;
+  updateInternshipStatus: () => void;
   classTaken: TakenMapType;
   hoursCompleted: number;
+  isComplementaryActivitiesTaken: boolean;
+  isRequiredInternshipTaken: boolean;
 }
 
 interface ProfileProviderProps {
@@ -23,7 +27,13 @@ export const Profile = createContext({} as ProfileData);
 
 export function ProfileProvider({ children }: ProfileProviderProps) {
   const [classTaken, setClassTaken] = useState<TakenMapType>({});
-  const [hoursCompleted, setHoursCompleted] = useState<number>(0);
+  const [hoursCompleted, setHoursCompleted] = useState<number | undefined>(
+    undefined
+  );
+  const [isComplementaryActivitiesTaken, setComplementaryActivitiesTaken] =
+    useState<boolean>(false);
+  const [isRequiredInternshipTaken, setIsRequiredInternshipTaken] =
+    useState<boolean>(false);
 
   useEffect(() => {
     let temp = localStorage.getItem("@classRequest-ClassesTaken");
@@ -74,9 +84,29 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
     setHoursCompleted(temp);
   };
 
+  const updateComplementaryActivities = () => {
+    setComplementaryActivitiesTaken(!isComplementaryActivitiesTaken);
+  };
+
+  const updateInternshipStatus = () => {
+    setIsRequiredInternshipTaken(!isRequiredInternshipTaken);
+  };
+
+  if (hoursCompleted === undefined) {
+    return <h1>Loading</h1>;
+  }
+
   return (
     <Profile.Provider
-      value={{ updateClassesTaken, classTaken, hoursCompleted }}
+      value={{
+        updateClassesTaken,
+        classTaken,
+        hoursCompleted,
+        isComplementaryActivitiesTaken,
+        updateComplementaryActivities,
+        isRequiredInternshipTaken,
+        updateInternshipStatus,
+      }}
     >
       {children}
     </Profile.Provider>

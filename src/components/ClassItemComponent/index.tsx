@@ -8,7 +8,11 @@ interface ClassItemProps {
   onClick(): void;
 }
 
-const ClassItem = ({ classItem, status, ...props }: ClassItemProps) => {
+const ClassItemComponent = ({
+  classItem,
+  status,
+  ...props
+}: ClassItemProps) => {
   const style = {
     taken: {
       bg: "green.600",
@@ -60,4 +64,4 @@ const ClassItem = ({ classItem, status, ...props }: ClassItemProps) => {
   );
 };
 
-export default ClassItem;
+export default ClassItemComponent;

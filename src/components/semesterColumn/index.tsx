@@ -1,7 +1,7 @@
 import { ClassItem as ClassItemInterface } from "@/interfaces/classes";
 import { VStack } from "@chakra-ui/react";
 import { useProfile } from "context/Profile";
-import ClassItem from "./components/ClassItem";
+import ClassItemComponent from "../ClassItemComponent";
 
 interface SemesterColumnInterface {
   semesterClasses: ClassItemInterface[];
@@ -9,7 +9,7 @@ interface SemesterColumnInterface {
 }
 
 const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
-  const { updateClassesTaken } = useProfile();
+  const { updateClassesTaken, hoursCompleted } = useProfile();
 
   const handleSelectClass = (
     classItem: ClassItemInterface,
@@ -25,14 +25,16 @@ const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
           classItem.requirementCode === undefined ||
           !!classItem.requirementCode.split("/").every((item) => seen[item]);
 
-        const status = !hasTakenPrerequisite
-          ? "blocked"
-          : seen && seen[classItem.code]
-          ? "taken"
-          : "free";
+        const status =
+          !hasTakenPrerequisite ||
+          (classItem.requiredHours && classItem.requiredHours > hoursCompleted)
+            ? "blocked"
+            : seen && seen[classItem.code]
+            ? "taken"
+            : "free";
 
         return (
-          <ClassItem
+          <ClassItemComponent
             classItem={classItem}
             status={status}
             onClick={() => handleSelectClass(classItem, hasTakenPrerequisite)}
