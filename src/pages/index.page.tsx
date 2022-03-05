@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import classesArray, { specialRequiredActivities } from "../../classes";
-import SemesterColumn from "@/components/semesterColumn";
+import SemesterColumn, { style } from "@/components/semesterColumn";
 import { useProfile } from "context/Profile";
 import NavBar from "@/components/Nav";
 import { ClassItem } from "@/interfaces/classes";
@@ -10,12 +10,8 @@ import ClassItemComponent from "@/components/ClassItemComponent";
 import ComplementaryActivitiesItem from "@/components/ComplementaryActivitiesItem";
 
 const Home: NextPage = () => {
-  const {
-    classTaken,
-    updateInternshipStatus,
-    isRequiredInternshipTaken,
-    hoursCompleted,
-  } = useProfile();
+  const { updateInternshipStatus, isRequiredInternshipTaken, hoursCompleted } =
+    useProfile();
 
   const internshipStatus = isRequiredInternshipTaken
     ? "taken"
@@ -39,13 +35,7 @@ const Home: NextPage = () => {
       <Flex w="100%" p="0 20px" maxW="1300px" direction="column">
         <HStack>
           {classesArray.map((item: ClassItem[], index) => {
-            return (
-              <SemesterColumn
-                key={index}
-                seen={classTaken}
-                semesterClasses={item}
-              />
-            );
+            return <SemesterColumn key={index} semesterClasses={item} />;
           })}
         </HStack>
 
@@ -55,7 +45,7 @@ const Home: NextPage = () => {
           <VStack>
             <ClassItemComponent
               classItem={specialRequiredActivities.requiredInternship}
-              status={internshipStatus}
+              style={style[internshipStatus]}
               onClick={
                 internshipStatus !== "blocked"
                   ? updateInternshipStatus

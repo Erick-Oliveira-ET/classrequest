@@ -7,12 +7,14 @@ import { ColorModeScript } from "@chakra-ui/color-mode";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ProfileProvider>
+    <>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
+        <ProfileProvider>
+          <Component {...pageProps} />
+        </ProfileProvider>
       </ChakraProvider>
-    </ProfileProvider>
+    </>
   );
 }
 export default MyApp;

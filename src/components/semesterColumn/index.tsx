@@ -12,13 +12,36 @@ import { useProfile } from "context/Profile";
 import { classesMapped } from "../../../classes";
 import ClassItemComponent from "../ClassItemComponent";
 
+let count = 0;
 interface SemesterColumnInterface {
   semesterClasses: ClassItemInterface[];
-  seen: Record<string, ClassItemInterface>;
 }
 
-const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
-  const { updateClassesTaken, hoursCompleted } = useProfile();
+export const style = {
+  taken: {
+    bg: "green.600",
+    _hover: {
+      cursor: "pointer",
+    },
+  },
+  free: {
+    _hover: {
+      cursor: "pointer",
+    },
+  },
+  blocked: {
+    bg: "red.600",
+    _hover: {
+      cursor: "default",
+    },
+  },
+};
+
+const SemesterColumn = ({ semesterClasses }: SemesterColumnInterface) => {
+  const { updateClassesTaken, hoursCompleted, classTaken: seen } = useProfile();
+
+  count += 1;
+  console.log(count);
 
   const handleSelectClass = (
     classItem: ClassItemInterface,
@@ -29,7 +52,7 @@ const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
 
   return (
     <VStack spacing={2}>
-      {semesterClasses.map((classItem: ClassItemInterface, id) => {
+      {semesterClasses.map((classItem: ClassItemInterface) => {
         const hasTakenPrerequisite =
           classItem.requirementCode === undefined ||
           !!classItem.requirementCode.split("/").every((item) => seen[item]);
@@ -50,13 +73,12 @@ const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
               <MenuButton>
                 <ClassItemComponent
                   classItem={classItem}
-                  status={status}
-                  key={id}
+                  style={style[status]}
+                  key={classItem.code}
                 />
               </MenuButton>
               {!hasTakenPrerequisite && classItem.requirementCode && (
                 <MenuList p="10px 10px">
-                  {console.log("requirementCode", classItem.requirementCode)}
                   Pré-requisito não concluido:{" "}
                   {classItem.requirementCode.split("/").map((item, index) => {
                     if (seen[item]) return;
@@ -77,9 +99,9 @@ const SemesterColumn = ({ semesterClasses, seen }: SemesterColumnInterface) => {
         return (
           <ClassItemComponent
             classItem={classItem}
-            status={status}
+            style={style[status]}
             onClick={() => handleSelectClass(classItem, hasTakenPrerequisite)}
-            key={id}
+            key={classItem.code}
           />
         );
       })}

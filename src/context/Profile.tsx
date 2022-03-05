@@ -3,8 +3,10 @@ import { cloneDeep } from "lodash";
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { classesMapped } from "../../classes";
@@ -62,7 +64,7 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
   }, []);
 
   useEffect(() => {
-    countHoursCompleted();
+    countHoursCompleted;
   }, [classTaken]);
 
   useEffect(() => {
@@ -79,37 +81,43 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
     );
   }, [isRequiredInternshipTaken]);
 
-  const updateClassesTaken = (classItem: ClassItem) => {
-    const temp = cloneDeep(classTaken);
-    if (temp[classItem.code]) {
-      let dependsOnClasses = classesMapped.requestedClassesMap?.get(
-        classItem.code
-      );
-
-      if (dependsOnClasses)
-        dependsOnClasses.map((itemCode) => {
-          if (temp[itemCode]) delete temp[itemCode];
-        });
-
-      delete temp[classItem.code];
-    } else temp[classItem.code] = classItem;
-
-    localStorage.setItem("@classRequest-ClassesTaken", JSON.stringify(temp));
-    setClassTaken(temp);
-  };
-
-  const countHoursCompleted = () => {
-    let temp = 0;
-    const deepClassTaken = cloneDeep(classTaken);
-
-    Object.entries(deepClassTaken).map(
-      ([_, classItem]: [string, ClassItem]) => {
-        temp += classItem.totalHrs * 15;
-      }
+  useEffect(() => {
+    localStorage.setItem(
+      "@classRequest-ClassesTaken",
+      JSON.stringify(classTaken)
     );
+  }, [classTaken]);
+
+  const updateClassesTaken = useCallback(
+    (classItem: ClassItem) => {
+      const temp = cloneDeep(classTaken);
+      if (temp[classItem.code]) {
+        let dependsOnClasses = classesMapped.requestedClassesMap?.get(
+          classItem.code
+        );
+
+        if (dependsOnClasses)
+          dependsOnClasses.map((itemCode) => {
+            if (temp[itemCode]) delete temp[itemCode];
+          });
+
+        delete temp[classItem.code];
+      } else temp[classItem.code] = classItem;
+
+      setClassTaken(temp);
+    },
+    [classTaken]
+  );
+
+  const countHoursCompleted = useMemo(() => {
+    let temp = 0;
+
+    Object.entries(classTaken).map(([_, classItem]: [string, ClassItem]) => {
+      temp += classItem.totalHrs * 15;
+    });
 
     setHoursCompleted(temp);
-  };
+  }, [classTaken]);
 
   const updateComplementaryActivities = () => {
     setComplementaryActivitiesTaken(!isComplementaryActivitiesTaken);

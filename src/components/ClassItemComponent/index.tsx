@@ -10,39 +10,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { ClassItem as ClassItemInterface } from "@/interfaces/classes";
-import React from "react";
+import React, { memo } from "react";
 
 interface ClassItemProps {
   classItem: ClassItemInterface;
-  status: "taken" | "free" | "blocked";
+  style: any;
   onClick?(): void;
 }
 
-const ClassItemComponent = ({
-  classItem,
-  status,
-  ...props
-}: ClassItemProps) => {
-  const style = {
-    taken: {
-      bg: "green.600",
-      _hover: {
-        cursor: "pointer",
-      },
-    },
-    free: {
-      _hover: {
-        cursor: "pointer",
-      },
-    },
-    blocked: {
-      bg: "red.600",
-      _hover: {
-        cursor: "default",
-      },
-    },
-  };
-
+const ClassItemComponent = ({ classItem, style, ...props }: ClassItemProps) => {
   return (
     <Flex
       direction="column"
@@ -51,7 +27,7 @@ const ClassItemComponent = ({
       width={"100%"}
       bg="gray.700"
       borderRadius="5px"
-      sx={style[status]}
+      sx={style}
       {...props}
     >
       <Center>
@@ -74,4 +50,4 @@ const ClassItemComponent = ({
   );
 };
 
-export default ClassItemComponent;
+export default memo(ClassItemComponent);
