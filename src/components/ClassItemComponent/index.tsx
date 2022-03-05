@@ -27,6 +27,7 @@ const ClassItemComponent = ({ classItem, style, ...props }: ClassItemProps) => {
       width={"100%"}
       bg="gray.700"
       borderRadius="5px"
+      transition="ease 600ms"
       sx={style}
       {...props}
     >

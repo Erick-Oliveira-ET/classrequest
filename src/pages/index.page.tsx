@@ -8,6 +8,7 @@ import { ClassItem } from "@/interfaces/classes";
 import { Center, Divider, Flex, HStack, VStack } from "@chakra-ui/react";
 import ClassItemComponent from "@/components/ClassItemComponent";
 import ComplementaryActivitiesItem from "@/components/ComplementaryActivitiesItem";
+import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
   const { updateInternshipStatus, isRequiredInternshipTaken, hoursCompleted } =

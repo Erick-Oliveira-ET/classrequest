@@ -6,6 +6,8 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Skeleton,
+  Stack,
   VStack,
 } from "@chakra-ui/react";
 import { useProfile } from "context/Profile";
@@ -38,7 +40,12 @@ export const style = {
 };
 
 const SemesterColumn = ({ semesterClasses }: SemesterColumnInterface) => {
-  const { updateClassesTaken, hoursCompleted, classTaken: seen } = useProfile();
+  const {
+    updateClassesTaken,
+    hoursCompleted,
+    classTaken: seen,
+    loading,
+  } = useProfile();
 
   count += 1;
   console.log(count);
@@ -49,6 +56,13 @@ const SemesterColumn = ({ semesterClasses }: SemesterColumnInterface) => {
   ) => {
     if (hasTakenPrerequisite) updateClassesTaken(classItem);
   };
+
+  if (loading)
+    return (
+      <VStack>
+        <Skeleton height="500px" width="115px" />
+      </VStack>
+    );
 
   return (
     <VStack spacing={2}>
@@ -70,7 +84,7 @@ const SemesterColumn = ({ semesterClasses }: SemesterColumnInterface) => {
         if (status === "blocked")
           return (
             <Menu>
-              <MenuButton>
+              <MenuButton w="100%">
                 <ClassItemComponent
                   classItem={classItem}
                   style={style[status]}

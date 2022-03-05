@@ -19,6 +19,7 @@ interface ProfileData {
   hoursCompleted: number;
   isComplementaryActivitiesTaken: boolean;
   isRequiredInternshipTaken: boolean;
+  loading: boolean;
 }
 
 interface ProfileProviderProps {
@@ -36,6 +37,12 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
     useState<boolean>(false);
   const [isRequiredInternshipTaken, setIsRequiredInternshipTaken] =
     useState<boolean>(false);
+
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     let temp = localStorage.getItem("@classRequest-ClassesTaken");
@@ -90,6 +97,7 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
 
   const updateClassesTaken = useCallback(
     (classItem: ClassItem) => {
+      setLoading(true);
       const temp = cloneDeep(classTaken);
       if (temp[classItem.code]) {
         let dependsOnClasses = classesMapped.requestedClassesMap?.get(
@@ -105,6 +113,8 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
       } else temp[classItem.code] = classItem;
 
       setClassTaken(temp);
+
+      setLoading(false);
     },
     [classTaken]
   );
@@ -141,6 +151,7 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
         updateComplementaryActivities,
         isRequiredInternshipTaken,
         updateInternshipStatus,
+        loading,
       }}
     >
       {children}
