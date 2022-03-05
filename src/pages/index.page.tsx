@@ -17,6 +17,13 @@ const Home: NextPage = () => {
     hoursCompleted,
   } = useProfile();
 
+  const internshipStatus = isRequiredInternshipTaken
+    ? "taken"
+    : specialRequiredActivities.requiredInternship.requiredHours >
+      hoursCompleted
+    ? "blocked"
+    : "free";
+
   return (
     <Flex direction="column" w="100%" h="100%" minH="100vh" align="center">
       <Head>
@@ -48,15 +55,12 @@ const Home: NextPage = () => {
           <VStack>
             <ClassItemComponent
               classItem={specialRequiredActivities.requiredInternship}
-              status={
-                isRequiredInternshipTaken
-                  ? "taken"
-                  : specialRequiredActivities.requiredInternship.requiredHours <
-                    hoursCompleted
-                  ? "blocked"
-                  : "free"
+              status={internshipStatus}
+              onClick={
+                internshipStatus !== "blocked"
+                  ? updateInternshipStatus
+                  : () => {}
               }
-              onClick={updateInternshipStatus}
             />
           </VStack>
           <ComplementaryActivitiesItem
