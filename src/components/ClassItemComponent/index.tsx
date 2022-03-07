@@ -74,13 +74,12 @@ const ClassItemComponent = ({
       sx={style}
       onClick={handleClick}
     >
-      <Center>
-        <Text align="center" fontSize={"small"} p="5px 5px">
-          {classItem.name}{" "}
-        </Text>
-      </Center>
+      <Text align="center" fontSize={"small"} p="5px 5px">
+        {classItem.name}{" "}
+      </Text>
 
       <Divider />
+
       <Flex p=" 0px 5px">
         <Text>{classItem.classHrs}</Text>
         <Spacer />

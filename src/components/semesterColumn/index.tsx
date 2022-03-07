@@ -11,10 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useProfile } from "context/Profile";
-import { classesMapped } from "../../../classes";
 import ClassItemComponent from "../ClassItemComponent";
-
-let count = 0;
 interface SemesterColumnInterface {
   semesterClasses: ClassItemInterface[];
 }
@@ -46,9 +43,6 @@ const SemesterColumn = ({ semesterClasses }: SemesterColumnInterface) => {
     classTaken: seen,
     loading,
   } = useProfile();
-
-  count += 1;
-  console.log(count);
 
   const handleSelectClass = (
     classItem: ClassItemInterface,
