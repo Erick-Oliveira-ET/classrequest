@@ -3,8 +3,10 @@ import { cloneDeep } from "lodash";
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { classesMapped } from "../../classes";
@@ -17,6 +19,7 @@ interface ProfileData {
   hoursCompleted: number;
   isComplementaryActivitiesTaken: boolean;
   isRequiredInternshipTaken: boolean;
+  loading: boolean;
 }
 
 interface ProfileProviderProps {
@@ -34,6 +37,12 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
     useState<boolean>(false);
   const [isRequiredInternshipTaken, setIsRequiredInternshipTaken] =
     useState<boolean>(false);
+
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     let temp = localStorage.getItem("@classRequest-ClassesTaken");
@@ -62,7 +71,7 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
   }, []);
 
   useEffect(() => {
-    countHoursCompleted();
+    countHoursCompleted;
   }, [classTaken]);
 
   useEffect(() => {
@@ -79,37 +88,46 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
     );
   }, [isRequiredInternshipTaken]);
 
-  const updateClassesTaken = (classItem: ClassItem) => {
-    const temp = cloneDeep(classTaken);
-    if (temp[classItem.code]) {
-      let dependsOnClasses = classesMapped.requestedClassesMap?.get(
-        classItem.code
-      );
-
-      if (dependsOnClasses)
-        dependsOnClasses.map((itemCode) => {
-          if (temp[itemCode]) delete temp[itemCode];
-        });
-
-      delete temp[classItem.code];
-    } else temp[classItem.code] = classItem;
-
-    localStorage.setItem("@classRequest-ClassesTaken", JSON.stringify(temp));
-    setClassTaken(temp);
-  };
-
-  const countHoursCompleted = () => {
-    let temp = 0;
-    const deepClassTaken = cloneDeep(classTaken);
-
-    Object.entries(deepClassTaken).map(
-      ([_, classItem]: [string, ClassItem]) => {
-        temp += classItem.totalHrs * 15;
-      }
+  useEffect(() => {
+    localStorage.setItem(
+      "@classRequest-ClassesTaken",
+      JSON.stringify(classTaken)
     );
+  }, [classTaken]);
+
+  const updateClassesTaken = useCallback(
+    (classItem: ClassItem) => {
+      setLoading(true);
+      const temp = cloneDeep(classTaken);
+      if (temp[classItem.code]) {
+        let dependsOnClasses = classesMapped.requestedClassesMap?.get(
+          classItem.code
+        );
+
+        if (dependsOnClasses)
+          dependsOnClasses.map((itemCode) => {
+            if (temp[itemCode]) delete temp[itemCode];
+          });
+
+        delete temp[classItem.code];
+      } else temp[classItem.code] = classItem;
+
+      setClassTaken(temp);
+
+      setLoading(false);
+    },
+    [classTaken]
+  );
+
+  const countHoursCompleted = useMemo(() => {
+    let temp = 0;
+
+    Object.entries(classTaken).map(([_, classItem]: [string, ClassItem]) => {
+      temp += classItem.totalHrs * 15;
+    });
 
     setHoursCompleted(temp);
-  };
+  }, [classTaken]);
 
   const updateComplementaryActivities = () => {
     setComplementaryActivitiesTaken(!isComplementaryActivitiesTaken);
@@ -133,6 +151,7 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
         updateComplementaryActivities,
         isRequiredInternshipTaken,
         updateInternshipStatus,
+        loading,
       }}
     >
       {children}
