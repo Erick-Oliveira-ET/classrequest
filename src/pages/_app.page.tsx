@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="Aplicativo para auxiliar na escolha de matérias do curso de Engenharia Mecatrônica da Universidade Federal de Uberlândia (UFU) utilizando o fluxograma oficial do curso."
         />
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {/* <meta name="viewport" content="width=device-width, initial-scale=1.0" /> */}
 
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://classrequest.vercel.app /" />

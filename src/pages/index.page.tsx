@@ -43,9 +43,20 @@ const Home: NextPage = () => {
       <NavBar />
 
       <Flex direction="column">
-        <SemesterColumnsContainer overflowX={"auto"} p={"0 15px"}>
+        <SemesterColumnsContainer
+          overflowX={"auto"}
+          p={"0 15px"}
+          alignItems={"flex-start"}
+          justifyContent={"center"}
+        >
           {classesArray.map((item: ClassItem[], index) => {
-            return <SemesterColumn key={index} semesterClasses={item} />;
+            return (
+              <SemesterColumn
+                key={"Período-" + index}
+                semesterNumber={index + 1}
+                semesterClasses={item}
+              />
+            );
           })}
         </SemesterColumnsContainer>
 

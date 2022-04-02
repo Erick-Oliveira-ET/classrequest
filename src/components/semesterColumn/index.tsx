@@ -12,8 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { useProfile } from "context/Profile";
 import ClassItemComponent from "../ClassItemComponent";
+import SemesterBox from "./components/SemesterBox";
 interface SemesterColumnInterface {
   semesterClasses: ClassItemInterface[];
+  semesterNumber: number;
 }
 
 export const style = {
@@ -36,7 +38,10 @@ export const style = {
   },
 };
 
-const SemesterColumn = ({ semesterClasses }: SemesterColumnInterface) => {
+const SemesterColumn = ({
+  semesterClasses,
+  semesterNumber,
+}: SemesterColumnInterface) => {
   const {
     updateClassesTaken,
     hoursCompleted,
@@ -60,6 +65,7 @@ const SemesterColumn = ({ semesterClasses }: SemesterColumnInterface) => {
 
   return (
     <VStack spacing={2} maxW={"130px"}>
+      <SemesterBox semesterNumber={semesterNumber} />
       {semesterClasses.map((classItem: ClassItemInterface) => {
         const hasTakenPrerequisite =
           classItem.requirementCode === undefined ||
