@@ -59,7 +59,7 @@ const SemesterColumn = ({ semesterClasses }: SemesterColumnInterface) => {
     );
 
   return (
-    <VStack spacing={2}>
+    <VStack spacing={2} maxW={"130px"}>
       {semesterClasses.map((classItem: ClassItemInterface) => {
         const hasTakenPrerequisite =
           classItem.requirementCode === undefined ||

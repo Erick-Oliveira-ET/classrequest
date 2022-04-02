@@ -23,15 +23,24 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://classrequest.vercel.app /"/>
+        <meta property="og:url" content="https://classrequest.vercel.app /" />
         <meta property="og:title" content="Fluxograma Mecatrônica" />
-        <meta property="og:description" content="Aplicativo para auxiliar na escolha de matérias do curso de Engenharia Mecatrônica da Universidade Federal de Uberlândia (UFU) utilizando o fluxograma oficial do curso." />
+        <meta
+          property="og:description"
+          content="Aplicativo para auxiliar na escolha de matérias do curso de Engenharia Mecatrônica da Universidade Federal de Uberlândia (UFU) utilizando o fluxograma oficial do curso."
+        />
         <meta property="og:image" content="/screenshot.png" />
 
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://classrequest.vercel.app/" />
+        <meta
+          property="twitter:url"
+          content="https://classrequest.vercel.app/"
+        />
         <meta property="twitter:title" content="Fluxograma Mecatrônica" />
-        <meta property="twitter:description" content="Aplicativo para auxiliar na escolha de matérias do curso de Engenharia Mecatrônica da Universidade Federal de Uberlândia (UFU) utilizando o fluxograma oficial do curso." />
+        <meta
+          property="twitter:description"
+          content="Aplicativo para auxiliar na escolha de matérias do curso de Engenharia Mecatrônica da Universidade Federal de Uberlândia (UFU) utilizando o fluxograma oficial do curso."
+        />
         <meta property="twitter:image" content="/screenshot.png"></meta>
       </Head>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />

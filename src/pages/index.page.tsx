@@ -9,6 +9,8 @@ import { Center, Divider, Flex, HStack, VStack } from "@chakra-ui/react";
 import ClassItemComponent from "@/components/ClassItemComponent";
 import ComplementaryActivitiesItem from "@/components/ComplementaryActivitiesItem";
 import { useEffect, useState } from "react";
+import Footer from "@/components/Footer";
+import { SemesterColumnsContainer } from "@/styles/theme";
 
 const Home: NextPage = () => {
   const { updateInternshipStatus, isRequiredInternshipTaken, hoursCompleted } =
@@ -22,7 +24,14 @@ const Home: NextPage = () => {
     : "free";
 
   return (
-    <Flex direction="column" w="100%" h="100%" minH="100vh" align="center">
+    <Flex
+      direction="column"
+      w="100%"
+      h="100%"
+      p={5}
+      minH="100vh"
+      align="center"
+    >
       <Head>
         <title>Fluxograma Mecatrônica</title>
         <meta
@@ -33,12 +42,12 @@ const Home: NextPage = () => {
       </Head>
       <NavBar />
 
-      <Flex w="100%" p="0 20px" maxW="1300px" direction="column">
-        <HStack>
+      <Flex direction="column">
+        <SemesterColumnsContainer overflowX={"auto"} p={"0 15px"}>
           {classesArray.map((item: ClassItem[], index) => {
             return <SemesterColumn key={index} semesterClasses={item} />;
           })}
-        </HStack>
+        </SemesterColumnsContainer>
 
         <Divider p="10px 0px" />
 
@@ -61,6 +70,7 @@ const Home: NextPage = () => {
           />
         </HStack>
       </Flex>
+      <Footer />
     </Flex>
   );
 };

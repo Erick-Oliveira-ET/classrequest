@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { chakra, extendTheme, HStack } from "@chakra-ui/react";
 import { Button } from "./Button";
 
 const theme = extendTheme({
@@ -12,3 +12,10 @@ const theme = extendTheme({
 });
 
 export default theme;
+
+export const SemesterColumnsContainer = chakra(HStack, {
+  baseStyle: {
+    overflowX: "auto",
+    maxWidth: "100vw",
+  },
+});
