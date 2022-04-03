@@ -32,6 +32,9 @@ export const style = {
   },
   blocked: {
     bg: "red.600",
+    ".totalHours": {
+      color: "gray.700",
+    },
     _hover: {
       cursor: "pointer",
     },

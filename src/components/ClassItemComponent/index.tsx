@@ -1,15 +1,4 @@
-import {
-  Box,
-  Center,
-  Divider,
-  Flex,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Spacer,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { Divider, Flex, Spacer, Text, useToast } from "@chakra-ui/react";
 import { ClassItem as ClassItemInterface } from "@/interfaces/classes";
 import React, { memo } from "react";
 import { classesMapped } from "../../../classes";
@@ -32,7 +21,6 @@ const ClassItemComponent = ({
   hasTakenPrerequisite,
   seen,
   hasRequiredHours,
-  ...props
 }: ClassItemProps) => {
   const toast = useToast();
 
@@ -85,7 +73,7 @@ const ClassItemComponent = ({
         <Spacer />
         <Text>{classItem.labHrs}</Text>
         <Spacer />
-        <Text fontWeight="medium" color="red.700">
+        <Text fontWeight="bold" color="red.500" className="totalHours">
           {classItem.totalHrs}
         </Text>
       </Flex>
