@@ -15,7 +15,6 @@ export default theme;
 
 export const SemesterColumnsContainer = chakra(HStack, {
   baseStyle: {
-    overflowX: "auto",
-    width: "100vw",
+    display: "flex",
   },
 });

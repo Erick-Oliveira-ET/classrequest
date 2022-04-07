@@ -35,7 +35,7 @@ const NavBar = () => {
   } = useProfile();
 
   return (
-    <Flex justify="end" w="100%" p="5px 5px 0px 0px">
+    <Flex justify="end" w="100%" p="5px">
       <Menu>
         <Tooltip aria-label="tooltip" label="Carga Horária para Integralização">
           <Box display="inline-block">

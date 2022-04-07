@@ -11,19 +11,17 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  overflow-x: hidden;
-}
-
 *::-webkit-scrollbar {
   position: absolute;
   width: 4px; /* width of the entire scrollbar */
   height: 4px; /* height of the entire scrollbar */
+  display: none;
 }
 
 *::-webkit-scrollbar-track {
   position: absolute;
   background: transparent; /* color of the tracking area */
+  display: none;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -31,10 +29,12 @@ body {
   background-color: #2d3748; /* color of the scroll thumb */
   border-radius: 2px; /* roundness of the scroll thumb */
   border: transparent; /* creates padding around scroll thumb */
+  display: none;
 }
 
 *::-webkit-scrollbar-corner {
   background-color: #2d3748;
+  display: none;
 }
 
 a {
