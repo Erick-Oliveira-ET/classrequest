@@ -29,6 +29,7 @@ const Home: NextPage = () => {
       w="100%"
       h="100%"
       p={5}
+      maxW="100vw"
       minH="100vh"
       align="center"
     >
