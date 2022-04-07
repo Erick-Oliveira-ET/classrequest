@@ -17,7 +17,7 @@ const SemesterBox = ({ semesterNumber }: SemesterBoxInterface) => {
       border="1px solid"
       borderColor="gray.500"
     >
-      <Text align="center" fontSize={"small"} p="5px 5px">
+      <Text align="center" fontSize={"small"} p="5px 5px" whiteSpace="nowrap">
         {`${semesterNumber}° Período`}
       </Text>
     </Flex>
