@@ -1,16 +1,16 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import classesArray, { specialRequiredActivities } from "../../classes";
-import SemesterColumn, { style } from "@/components/semesterColumn";
+import SemesterColumn from "@/components/semesterColumn";
 import { useProfile } from "context/Profile";
 import NavBar from "@/components/Nav";
 import { ClassItem } from "@/interfaces/classes";
-import { Center, Divider, Flex, HStack, VStack } from "@chakra-ui/react";
+import { Divider, Flex, HStack, VStack } from "@chakra-ui/react";
 import ClassItemComponent from "@/components/ClassItemComponent";
 import ComplementaryActivitiesItem from "@/components/ComplementaryActivitiesItem";
-import { useEffect, useState } from "react";
 import Footer from "@/components/Footer";
 import { SemesterColumnsContainer } from "@/styles/theme";
+import InstructionsModal from "@/components/InstructionsModal";
 
 const Home: NextPage = () => {
   const { updateInternshipStatus, isRequiredInternshipTaken, hoursCompleted } =
@@ -41,6 +41,8 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <InstructionsModal />
+
       <NavBar />
 
       <Flex direction="column">
@@ -64,7 +66,7 @@ const Home: NextPage = () => {
 
         <Divider p="10px 0px" />
 
-        <HStack justify="center" p="10px">
+        {/* <HStack justify="center" p="10px">
           <VStack>
             <ClassItemComponent
               classItem={specialRequiredActivities.requiredInternship}
@@ -81,7 +83,7 @@ const Home: NextPage = () => {
               specialRequiredActivities.complementaryAcademicActivities
             }
           />
-        </HStack>
+        </HStack> */}
       </Flex>
       <Footer />
     </Flex>

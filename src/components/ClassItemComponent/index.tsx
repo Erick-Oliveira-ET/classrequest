@@ -2,11 +2,11 @@ import { Divider, Flex, Spacer, Text, useToast } from "@chakra-ui/react";
 import { ClassItem as ClassItemInterface } from "@/interfaces/classes";
 import React, { memo } from "react";
 import { classesMapped } from "../../../classes";
+import { style } from "./styled";
 
 interface ClassItemProps {
   classItem: ClassItemInterface;
-  style: any;
-  status?: "blocked" | "free" | "taken";
+  status?: "blocked" | "free" | "taken" | "specialBlocked";
   hasTakenPrerequisite?: boolean;
   seen?: any;
   hasRequiredHours?: boolean;
@@ -16,7 +16,6 @@ interface ClassItemProps {
 const ClassItemComponent = ({
   classItem,
   status,
-  style,
   onClick,
   hasTakenPrerequisite,
   seen,
@@ -56,10 +55,11 @@ const ClassItemComponent = ({
       height={"100%"}
       min-height={"90px"}
       width={"100%"}
+      maxW={"130px"}
       bg="gray.700"
       borderRadius="5px"
       transition="ease 600ms"
-      sx={style}
+      sx={status ? style[status] : style.free}
       onClick={handleClick}
     >
       <Text align="center" fontSize={"small"} p="5px 5px">
