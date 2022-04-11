@@ -89,10 +89,16 @@ export function ProfileProvider({ children }: ProfileProviderProps) {
   }, [isRequiredInternshipTaken]);
 
   useEffect(() => {
-    localStorage.setItem(
-      "@classRequest-ClassesTaken",
-      JSON.stringify(classTaken)
-    );
+    const asyncStorage = async () => {
+      return new Promise(() => {
+        localStorage.setItem(
+          "@classRequest-ClassesTaken",
+          JSON.stringify(classTaken)
+        );
+      });
+    };
+
+    asyncStorage();
   }, [classTaken]);
 
   const updateClassesTaken = useCallback(

@@ -31,7 +31,7 @@ const InstructionsModal = () => {
     if (!firstTime) {
       setIsOpen(false);
     }
-  });
+  }, []);
 
   const handleClose = () => {
     localStorage.setItem("@classRequest-firstTime", JSON.stringify(false));
@@ -97,7 +97,6 @@ const InstructionsModal = () => {
                 totalHrs: 6,
               }}
               onClick={handleBlockedClassClick}
-              hasTakenPrerequisite={false}
               status="specialBlocked"
             />
             <Text>
