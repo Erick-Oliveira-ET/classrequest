@@ -1,6 +1,7 @@
 import { Center, Divider, Flex, Text, VStack } from "@chakra-ui/react";
 import { useProfile } from "context/Profile";
 import React from "react";
+import { style } from "../ClassItemComponent/styled";
 
 interface ComplementaryActivitiesItemProps {
   classItem: { name: string; code: string; min: number };
@@ -14,26 +15,6 @@ const ComplementaryActivitiesItem = ({
 
   const handleSelectClass = () => {
     updateComplementaryActivities();
-  };
-
-  const style = {
-    taken: {
-      bg: "green.600",
-      _hover: {
-        cursor: "pointer",
-      },
-    },
-    free: {
-      _hover: {
-        cursor: "pointer",
-      },
-    },
-    blocked: {
-      bg: "red.600",
-      _hover: {
-        cursor: "default",
-      },
-    },
   };
 
   return (

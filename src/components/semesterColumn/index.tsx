@@ -1,18 +1,10 @@
 import { ClassItem as ClassItemInterface } from "@/interfaces/classes";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Skeleton,
-  Stack,
-  VStack,
-} from "@chakra-ui/react";
+import { Skeleton, useToast, VStack } from "@chakra-ui/react";
 import { useProfile } from "context/Profile";
+import { classesMapped } from "../../../classes";
 import ClassItemComponent from "../ClassItemComponent";
 import SemesterBox from "./components/SemesterBox";
+
 interface SemesterColumnInterface {
   semesterClasses: ClassItemInterface[];
   semesterNumber: number;
@@ -28,12 +20,58 @@ const SemesterColumn = ({
     classTaken: seen,
     loading,
   } = useProfile();
+  const toast = useToast();
+
+  const handleClick = (
+    classItem: ClassItemInterface,
+    hasTakenPrerequisite: boolean,
+    hasRequiredHours: boolean,
+    status: "blocked" | "free" | "taken"
+  ) => {
+    if (status === "blocked") {
+      handleBlockedClassClick(
+        classItem,
+        hasTakenPrerequisite,
+        hasRequiredHours
+      );
+    } else {
+      handleSelectClass(classItem, hasTakenPrerequisite);
+    }
+    return;
+  };
 
   const handleSelectClass = (
     classItem: ClassItemInterface,
     hasTakenPrerequisite?: boolean
   ) => {
     if (hasTakenPrerequisite) updateClassesTaken(classItem);
+  };
+
+  const handleBlockedClassClick = (
+    classItem: ClassItemInterface,
+    hasTakenPrerequisite: boolean,
+    hasRequiredHours: boolean
+  ) => {
+    let message = "";
+    if (!hasTakenPrerequisite && classItem.requirementCode)
+      message = `Pré-requisito não concluido: 
+            ${classItem.requirementCode
+              .split("/")
+              .map((item) => {
+                if (!seen[item]) return classesMapped.values[item].name;
+              })
+              .join(" / ")}`;
+
+    if (!hasRequiredHours) {
+      message = `Necessário integralizar ${classItem.requiredHours} horas de curso`;
+    }
+
+    toast({
+      title: "Matéria Bloqueada",
+      description: message,
+      status: "error",
+      isClosable: true,
+    });
   };
 
   if (loading)
@@ -65,10 +103,14 @@ const SemesterColumn = ({
           <ClassItemComponent
             classItem={classItem}
             status={status}
-            hasRequiredHours={hasRequiredHours}
-            hasTakenPrerequisite={hasTakenPrerequisite}
-            seen={seen}
-            onClick={() => handleSelectClass(classItem, hasTakenPrerequisite)}
+            onClick={() =>
+              handleClick(
+                classItem,
+                hasTakenPrerequisite,
+                hasRequiredHours,
+                status
+              )
+            }
             key={classItem.code}
           />
         );

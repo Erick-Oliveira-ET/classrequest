@@ -5,23 +5,15 @@ import SemesterColumn from "@/components/semesterColumn";
 import { useProfile } from "context/Profile";
 import NavBar from "@/components/Nav";
 import { ClassItem } from "@/interfaces/classes";
-import { Divider, Flex, HStack, VStack } from "@chakra-ui/react";
-import ClassItemComponent from "@/components/ClassItemComponent";
-import ComplementaryActivitiesItem from "@/components/ComplementaryActivitiesItem";
+import { Divider, Flex } from "@chakra-ui/react";
 import Footer from "@/components/Footer";
 import { SemesterColumnsContainer } from "@/styles/theme";
 import InstructionsModal from "@/components/InstructionsModal";
+import SpecialItems from "@/components/SpecialItems";
 
 const Home: NextPage = () => {
   const { updateInternshipStatus, isRequiredInternshipTaken, hoursCompleted } =
     useProfile();
-
-  const internshipStatus = isRequiredInternshipTaken
-    ? "taken"
-    : specialRequiredActivities.requiredInternship.requiredHours >
-      hoursCompleted
-    ? "blocked"
-    : "free";
 
   return (
     <Flex
@@ -66,24 +58,7 @@ const Home: NextPage = () => {
 
         <Divider p="10px 0px" />
 
-        {/* <HStack justify="center" p="10px">
-          <VStack>
-            <ClassItemComponent
-              classItem={specialRequiredActivities.requiredInternship}
-              style={style[internshipStatus]}
-              onClick={
-                internshipStatus !== "blocked"
-                  ? updateInternshipStatus
-                  : () => {}
-              }
-            />
-          </VStack>
-          <ComplementaryActivitiesItem
-            classItem={
-              specialRequiredActivities.complementaryAcademicActivities
-            }
-          />
-        </HStack> */}
+        <SpecialItems />
       </Flex>
       <Footer />
     </Flex>
